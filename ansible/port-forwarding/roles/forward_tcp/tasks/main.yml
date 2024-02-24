@@ -1,6 +1,6 @@
 - name: Add forwarding rule
   shell: "nft 'add rule nat prerouting ip daddr {{ self_address }} tcp dport { {{ forward_port }} } dnat {{ target_server }}:{{ forward_port }}'"
-- name: Save rule
+- name: Save rules
   shell: nft list ruleset | tee /etc/nftables.conf
 #- name: Enable port forwarding using iptables
 #  ansible.builtin.iptables:

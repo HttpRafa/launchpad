@@ -1,0 +1,16 @@
+- name: Flush rules
+  shell: nft flush ruleset
+- name: Save rules
+  shell: nft list ruleset | tee /etc/nftables.conf
+- name: Restart machine
+  ansible.builtin.reboot:
+- name: Add nat table
+  shell: nft add table nat
+- name: Add postrouting chain
+  shell: nft 'add chain nat postrouting { type nat hook postrouting priority 100 ; }'
+- name: Add prerouting chain
+  shell: nft 'add chain nat prerouting { type nat hook prerouting priority -100; }'
+- name: Add masquerade rule
+  shell: nft add rule nat postrouting masquerade
+- name: Save rules
+  shell: nft list ruleset | tee /etc/nftables.conf
