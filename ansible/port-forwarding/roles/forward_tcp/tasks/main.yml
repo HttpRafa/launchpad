@@ -1,0 +1,23 @@
+- name: Add forwarding rule
+  shell: "nft 'add rule nat prerouting ip daddr {{ self_address }} tcp dport { {{ forward_port }} } dnat {{ target_server }}:{{ forward_port }}'"
+- name: Save rule
+  shell: nft list ruleset | tee /etc/nftables.conf
+#- name: Enable port forwarding using iptables
+#  ansible.builtin.iptables:
+#    chain: PREROUTING
+#    table: nat
+#    in_interface: "{{ in_interface }}"
+#    protocol: tcp
+#    destination_port: "{{ forward_port }}"
+#    jump: DNAT
+#    to_destination: "{{ target_server }}:{{ forward_port }}"
+#- name: Enable port forwarding using iptables for the return path
+#  ansible.builtin.iptables:
+#    chain: POSTROUTING
+#    table: nat
+#    out_interface: "{{ out_interface }}"
+#    source: "{{ target_server }}"
+#    protocol: tcp
+#    destination_port: "{{ forward_port }}"
+#    jump: SNAT
+#    to_source: "{{ self_address }}"

@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Flush rules
+      shell: nft flush ruleset
+    - name: Save rules
+      shell: nft list ruleset | tee /etc/nftables.conf
+    - name: Restart machine
+      ansible.builtin.reboot:
