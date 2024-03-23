@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: local-rafa-run-rancher
+  namespace: cattle-system
+spec:
+  secretName: tls-rancher-ingress
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "*.local.rafa.run"
+  dnsNames:
+  - "local.rafa.run"
+  - "*.local.rafa.run"
