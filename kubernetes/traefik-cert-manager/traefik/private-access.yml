@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: private-access
+  namespace: default
+spec:
+  ipAllowList:
+    sourceRange:
+      - 192.168.0.200 # Only allow the ip of my computer
