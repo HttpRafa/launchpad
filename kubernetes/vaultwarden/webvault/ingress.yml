@@ -1,0 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: vaultwarden-web
+  namespace: vaultwarden
+  annotations: 
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`vaultwarden.external.rafa.run`)
+      kind: Rule
+      middlewares:
+#        - name: default-headers
+#          namespace: default
+      services:
+        - name: vaultwarden
+          port: 80
+  tls:
+    secretName: external-rafa-run-tls

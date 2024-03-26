@@ -1,0 +1,12 @@
+domain: "https://vaultwarden.external.rafa.run"
+signupsAllowed: false
+timeZone: "Europe/Berlin"
+ingress:
+  enabled: false
+adminToken:
+  existingSecret: "vaultwarden-admin-token"
+  existingSecretKey: "token"
+data:
+  name: "vaultwarden-data"
+  size: "10Gi"
+  class: "longhorn"
