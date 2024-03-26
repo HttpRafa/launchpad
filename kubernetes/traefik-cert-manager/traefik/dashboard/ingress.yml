@@ -17,5 +17,5 @@ spec:
       services:
         - name: api@internal
           kind: TraefikService
-#  tls:
-#    secretName: local-rafa-run-tls
+  tls:
+    secretName: local-rafa-run-tls

@@ -3,13 +3,12 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: local-rafa-run
-  namespace: default
+  namespace: default # Change this to the namespace where the application is
 spec:
   secretName: local-rafa-run-tls
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "*.local.rafa.run"
   dnsNames:
   - "local.rafa.run"
   - "*.local.rafa.run"
