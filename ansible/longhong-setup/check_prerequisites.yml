@@ -8,6 +8,9 @@
     - name: Install curl
       ansible.builtin.apt:
         name: curl
+    - name: Install nfs-common
+      ansible.builtin.apt:
+        name: nfs-common
     - name: Install util-linux
       ansible.builtin.apt:
         name: util-linux

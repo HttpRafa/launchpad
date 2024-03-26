@@ -1,0 +1,14 @@
+longhornUI:
+  replicas: 1
+
+longhornConversionWebhook:
+  replicas: 2
+
+longhornAdmissionWebhook:
+  replicas: 2
+
+longhornRecoveryBackend:
+  replicas: 2
+
+ingress:
+  enabled: false
