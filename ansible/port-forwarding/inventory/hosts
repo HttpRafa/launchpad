@@ -1,9 +1,2 @@
-[public]
-159.69.180.183
-
-[private]
-192.168.0.70 tailscale_address="100.100.10.1"
-
-[fservers:children]
-public
-private
+[servers]
+167.235.244.54

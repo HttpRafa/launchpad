@@ -1,0 +1,12 @@
+- name: Copy systemd service file to server
+  ansible.builtin.copy:
+    src: forwarding.service
+    dest: /etc/systemd/system
+    owner: root
+    group: root
+- name: Start service
+  ansible.builtin.systemd:
+    name: forwarding
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

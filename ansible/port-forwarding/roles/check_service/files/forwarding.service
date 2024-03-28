@@ -1,0 +1,11 @@
+[Unit]
+Description=Set iptable rules and start ipv6 tunnels
+After=netbird.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /usr/local/bin/forwarding.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+- hosts: servers
+  become: true
+  roles:
+    - role: check_requirements
+    - role: check_script
+
+    ############# Ports #############
+    #- role: forward_tcp
+    #  source_port: 25566 # Change this to the source port 
+    #  forward_port: 25565 # Change this to port on the target server
+    #  target_server: 0.0.0.0 # Change this to target server
+    #  ipv6: true
+    ############# Ports #############
+
+    - role: check_service

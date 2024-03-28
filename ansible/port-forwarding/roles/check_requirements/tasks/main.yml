@@ -1,0 +1,23 @@
+- name: Populate service facts
+  ansible.builtin.service_facts:
+- name: Fail if netbird is not installed
+  debug:
+    msg: netbird is installed!
+  when: ansible_facts.services['netbird.service'] is defined
+  failed_when: ansible_facts.services['netbird.service'] is undefined
+- name: Check if netbird is started
+  ansible.builtin.systemd_service:
+    name: netbird
+    state: started
+    enabled: true
+    masked: no
+- name: Check if socat is installed
+  ansible.builtin.apt:
+    name: socat
+- name: Check if ipv4 forwarding is enabled
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: true
+    state: present
+    reload: true

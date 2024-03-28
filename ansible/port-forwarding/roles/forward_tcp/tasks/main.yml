@@ -1,23 +1,22 @@
+- name: Check if MASQUERADE rule exists
+  ansible.builtin.lineinfile:
+    path: /usr/local/bin/forwarding.sh
+    regexp: '^iptables -t nat -A POSTROUTING -j MASQUERADE'
+    line: iptables -t nat -A POSTROUTING -j MASQUERADE
+    insertbefore: '^# Generated end'
+- name: Add debug message
+  ansible.builtin.lineinfile:
+    path: /usr/local/bin/forwarding.sh
+    line: "echo '127.0.0.1:{{ source_port }} -> {{ target_server }}:{{ forward_port }}'"
+    insertbefore: '^# Generated end'
 - name: Add forwarding rule
-  shell: "nft 'add rule nat prerouting ip daddr {{ self_address }} tcp dport { {{ forward_port }} } dnat {{ target_server }}:{{ forward_port }}'"
-- name: Save rules
-  shell: nft list ruleset | tee /etc/nftables.conf
-#- name: Enable port forwarding using iptables
-#  ansible.builtin.iptables:
-#    chain: PREROUTING
-#    table: nat
-#    in_interface: "{{ in_interface }}"
-#    protocol: tcp
-#    destination_port: "{{ forward_port }}"
-#    jump: DNAT
-#    to_destination: "{{ target_server }}:{{ forward_port }}"
-#- name: Enable port forwarding using iptables for the return path
-#  ansible.builtin.iptables:
-#    chain: POSTROUTING
-#    table: nat
-#    out_interface: "{{ out_interface }}"
-#    source: "{{ target_server }}"
-#    protocol: tcp
-#    destination_port: "{{ forward_port }}"
-#    jump: SNAT
-#    to_source: "{{ self_address }}"
+  ansible.builtin.lineinfile:
+    path: /usr/local/bin/forwarding.sh
+    line: iptables -t nat -A PREROUTING -p tcp --dport {{ source_port }} -j DNAT --to-destination {{ target_server }}:{{ forward_port }}
+    insertbefore: '^# Generated end'
+- name: Create ipv6 tunnel
+  ansible.builtin.lineinfile:
+    path: /usr/local/bin/forwarding.sh
+    line: nohup socat TCP6-LISTEN:{{ source_port }},fork TCP4:{{ target_server }}:{{ forward_port }} &
+    insertbefore: '^# Generated end'
+  when: ipv6 == true
