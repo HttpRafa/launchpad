@@ -1,6 +1,7 @@
 domain: "https://vaultwarden.external.rafa.run"
 image:
   tag: "1.30.5-alpine"
+ipHeader: "X-Forwarded-For"
 signupsAllowed: false
 timeZone: "Europe/Berlin"
 ingress:
