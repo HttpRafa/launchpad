@@ -13,7 +13,6 @@ services:
       - ./certs/:/etc/traefik/certs/
       - ./logs/:/var/log/traefik/
     restart: unless-stopped
-
 networks:
   default:
     name: traefik
