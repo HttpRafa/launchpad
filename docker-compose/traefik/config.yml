@@ -1,0 +1,25 @@
+http:
+  routers:
+    external:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`vaultwarden.external.rafa.run`)"
+      tls:
+        certResolver: production
+      service: k8s-cluster
+#    wings01:
+#      entryPoints:
+#        - "websecure"
+#      rule: "Host(`node01.gameserver.kienitz.cloud`)"
+#      tls:
+#        certResolver: production
+#      service: wings01
+  services:
+    k8s-cluster: # This service points to my k8s cluster at home
+      loadBalancer:
+        servers:
+          - url: "https://192.168.0.60"
+#    wings01:
+#      loadBalancer:
+#        servers:
+#          - url: "http://100.64.0.3:443"
