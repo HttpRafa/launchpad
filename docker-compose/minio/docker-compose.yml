@@ -1,0 +1,34 @@
+services:
+  minio:
+    image: quay.io/minio/minio:RELEASE.2024-03-30T09-41-56Z
+    networks:
+      - traefik
+    volumes:
+      - /mnt/u398872-offsite/s3-storage/:/data/
+    command:
+      - server
+      - /data
+      - --console-address
+      - ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_BROWSER_REDIRECT_URL: "https://panel.minio.hetzner.rafa.run"
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.minio-panel.entrypoints=web, websecure
+      - traefik.http.routers.minio-panel.rule=Host(`panel.minio.hetzner.rafa.run`)
+      - traefik.http.services.minio-panel.loadbalancer.server.port=9001
+      - traefik.http.routers.minio-panel.service=minio-panel
+      - traefik.http.routers.minio-panel.tls=true
+      - traefik.http.routers.minio-panel.tls.certresolver=production
+      - traefik.http.routers.minio-storage.entrypoints=web, websecure
+      - traefik.http.routers.minio-storage.rule=Host(`storage.minio.hetzner.rafa.run`)
+      - traefik.http.services.minio-storage.loadbalancer.server.port=9000
+      - traefik.http.routers.minio-storage.service=minio-storage
+      - traefik.http.routers.minio-storage.tls=true
+      - traefik.http.routers.minio-storage.tls.certresolver=production
+networks:
+  traefik:
+    external: true
