@@ -7,16 +7,16 @@
 - name: Add debug message
   ansible.builtin.lineinfile:
     path: /usr/local/bin/forwarding.sh
-    line: "echo 'Adding forwarding rule for TCP packets from 127.0.0.1:{{ source_port }} to {{ target_server }}:{{ forward_port }}'"
+    line: "echo 'Adding forwarding rule for UDP packets from 127.0.0.1:{{ source_port }} to {{ target_server }}:{{ forward_port }}'"
     insertbefore: '^# Generated end'
 - name: Add forwarding rule
   ansible.builtin.lineinfile:
     path: /usr/local/bin/forwarding.sh
-    line: iptables -t nat -A PREROUTING -p tcp --dport {{ source_port }} -j DNAT --to-destination {{ target_server }}:{{ forward_port }}
+    line: iptables -t nat -A PREROUTING -p udp --dport {{ source_port }} -j DNAT --to-destination {{ target_server }}:{{ forward_port }}
     insertbefore: '^# Generated end'
 - name: Create ipv6 tunnel
   ansible.builtin.lineinfile:
     path: /usr/local/bin/forwarding.sh
-    line: nohup socat TCP6-LISTEN:{{ source_port }},fork TCP4:{{ target_server }}:{{ forward_port }} &
+    line: nohup socat UDP6-LISTEN:{{ source_port }},fork UDP4:{{ target_server }}:{{ forward_port }} &
     insertbefore: '^# Generated end'
   when: ipv6 == true
