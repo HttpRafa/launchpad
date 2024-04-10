@@ -29,7 +29,7 @@ http:
     media-server: # This service points to my media server at home
       loadBalancer:
         servers:
-          - url: "http://192.168.0.80:8096"
+          - url: "http://192.168.0.80:80"
     node01:
       loadBalancer:
         servers:
