@@ -1,12 +1,19 @@
 http:
   routers:
-    external:
+    vaultwarden:
       entryPoints:
         - "websecure"
       rule: "Host(`vaultwarden.external.rafa.run`)"
       tls:
         certResolver: production
       service: k8s-cluster
+    jellyfin:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`jellyfin.external.rafa.run`)"
+      tls:
+        certResolver: production
+      service: media-server
     node01:
       entryPoints:
         - "websecure"
@@ -19,6 +26,10 @@ http:
       loadBalancer:
         servers:
           - url: "https://192.168.0.60"
+    media-server: # This service points to my media server at home
+      loadBalancer:
+        servers:
+          - url: "http://192.168.0.80:8096"
     node01:
       loadBalancer:
         servers:

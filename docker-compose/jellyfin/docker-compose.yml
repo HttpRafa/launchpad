@@ -1,0 +1,9 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:2024040805
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /mnt/media/:/media/
+      - /srv/jellyfin/config/:/config/
+      - /srv/jellyfin/cache/:/cache/
