@@ -7,3 +7,5 @@ services:
       - /mnt/media/:/media/
       - /srv/jellyfin/config/:/config/
       - /srv/jellyfin/cache/:/cache/
+    environment:
+      JELLYFIN_PublishedServerUrl: "https://jellyfin.external.rafa.run"
