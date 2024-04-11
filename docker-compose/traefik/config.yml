@@ -11,6 +11,8 @@ http:
       entryPoints:
         - "websecure"
       rule: "Host(`jellyfin.external.rafa.run`)"
+      middlewares:
+        - "jellyfin"
       tls:
         certResolver: production
       service: media-server
@@ -34,3 +36,18 @@ http:
       loadBalancer:
         servers:
           - url: "http://192.168.0.40:443"
+  middlewares:
+    jellyfin:
+      headers:
+        customResponseHeaders:
+          X-Robots-Tag: "noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex"
+          X-XSS-PROTECTION: 0
+        customFrameOptionsValue: "allow-from https://jellyfin.external.rafa.run'"
+        frameDeny: true
+        contentTypeNosniff: true
+        SSLRedirect: true
+        SSLHost: jellyfin.external.rafa.run
+        SSLForceHost: true
+        STSIncludeSubdomains: true
+        STSPreload: true
+        forceSTSHeader: true
