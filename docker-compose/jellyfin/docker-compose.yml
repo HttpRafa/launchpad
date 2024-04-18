@@ -2,10 +2,11 @@ services:
   jellyfin:
     image: jellyfin/jellyfin:2024041505
     restart: unless-stopped
+    user: 1000:1000
     network_mode: host
     volumes:
       - /mnt/media/:/media/
-      - /srv/jellyfin/config/:/config/
-      - /srv/jellyfin/cache/:/cache/
+      - ./config/:/config/
+      - ./cache/:/cache/
     environment:
       JELLYFIN_PublishedServerUrl: "https://jellyfin.external.rafa.run"
