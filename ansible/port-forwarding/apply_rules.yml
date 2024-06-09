@@ -6,16 +6,16 @@
 
     ############# Ports #############
     - role: forward_tcp
-      source_port: 7777 # Change this to the source port 
-      forward_port: 27000 # Change this to port on the target server
+      source_port: 25565 # Change this to the source port 
+      forward_port: 27002 # Change this to port on the target server
       target_server: 192.168.0.40 # Change this to target server
       ipv6: false
       
-    - role: forward_udp
-      source_port: 7778 # Change this to the source port 
-      forward_port: 27001 # Change this to port on the target server
-      target_server: 192.168.0.40 # Change this to target server
-      ipv6: false
+    #- role: forward_udp
+    #  source_port: 7778 # Change this to the source port 
+    #  forward_port: 27001 # Change this to port on the target server
+    #  target_server: 192.168.0.40 # Change this to target server
+    #  ipv6: false
 
     #- role: forward_tcp
     #  source_port: 25565 # Change this to the source port 
