@@ -23,6 +23,13 @@ http:
       tls:
         certResolver: production
       service: node01
+    cloudnode01:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`cloudnode01.gameserver.rafa.run`)"
+      tls:
+        certResolver: production
+      service: cloudnode01
   services:
     k8s-cluster: # This service points to my k8s cluster at home
       loadBalancer:
@@ -36,6 +43,10 @@ http:
       loadBalancer:
         servers:
           - url: "http://192.168.0.40:443"
+    cloudnode01:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.0.45:443"
   middlewares:
     jellyfin:
       headers:
