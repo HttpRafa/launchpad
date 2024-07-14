@@ -1,0 +1,21 @@
+{
+    "name": "Development Container",
+    "dockerFile": "Dockerfile",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            },
+            "extensions": [
+                // Ansible
+                "redhat.ansible",
+
+                // Extensions for general development
+                "usernamehw.errorlens",
+                "tamasfe.even-better-toml",
+                "ms-azuretools.vscode-docker",
+                "github.vscode-github-actions"
+            ]
+        }
+    }
+}

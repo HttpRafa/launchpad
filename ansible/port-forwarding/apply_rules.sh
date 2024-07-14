@@ -1,0 +1,1 @@
+ANSIBLE_CONFIG=ansible.cfg ansible-playbook apply_rules.yml
