@@ -1,0 +1,9 @@
+services:
+  nginx:
+    image: nginx:1.27.0
+    container_name: nginx
+    ports:
+      - 62163:80
+    volumes:
+      - ./content:/usr/share/nginx/html:ro
+    restart: unless-stopped
