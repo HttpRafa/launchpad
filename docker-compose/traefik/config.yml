@@ -7,6 +7,13 @@ http:
       tls:
         certResolver: production
       service: k8s-cluster
+    reposilite:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`repo.external.rafa.run`)"
+      tls:
+        certResolver: production
+      service: k8s-cluster
     jellyfin:
       entryPoints:
         - "websecure"
