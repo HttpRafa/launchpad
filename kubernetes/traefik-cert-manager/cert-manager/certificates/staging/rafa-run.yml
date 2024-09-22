@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: rafa-run-staging
+  namespace: default
+spec:
+  secretName: rafa-run-staging-tls
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  commonName: "*.rafa.run"
+  dnsNames:
+  - "rafa.run"
+  - "*.rafa.run"

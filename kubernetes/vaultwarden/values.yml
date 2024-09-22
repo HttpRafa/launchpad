@@ -1,8 +1,8 @@
-domain: "https://vaultwarden.external.rafa.run"
+domain: "https://vaultwarden.rafa.run"
 image:
-  tag: "1.31.0-alpine"
-ipHeader: "X-Forwarded-For"
+  tag: "1.32.0-alpine"
 signupsAllowed: false
+resourceType: "Deployment"
 timeZone: "Europe/Berlin"
 ingress:
   enabled: false
@@ -12,4 +12,5 @@ adminToken:
 data:
   name: "vaultwarden-data"
   size: "10Gi"
-  class: "longhorn"
+  path: "/data"
+  accessMode: "ReadWriteOnce"
