@@ -1,7 +1,7 @@
 services:
   wings:
     image: ghcr.io/pterodactyl/wings:v1.11.13
-    restart: always
+    restart: unless-stopped
     networks:
       - wings0
     ports:

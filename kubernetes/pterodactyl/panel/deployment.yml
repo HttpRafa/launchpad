@@ -20,13 +20,6 @@ spec:
       containers:
       - name: pterodactyl
         image: ghcr.io/pterodactyl/panel:v1.11.7
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "300m"
-          limits: 
-            memory: "256Mi"
-            cpu: "500m" 
         ports: 
           - containerPort: 80
         env:

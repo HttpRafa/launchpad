@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gameserver-node-01
+  name: gameserver-node-00
   namespace: pterodactyl
 spec:
   ports:
