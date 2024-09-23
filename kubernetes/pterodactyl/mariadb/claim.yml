@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pterodactyl-app-claim
+  name: pterodactyl-mariadb-claim
   namespace: pterodactyl
 spec:
   storageClassName: longhorn

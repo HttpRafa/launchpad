@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  namespace: pterodactyl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template: 
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb
+        image: mariadb:11.5.2
+        ports:
+        - containerPort: 3306 
+        env:
+        - name: MARIADB_DATABASE
+          value: "panel"
+        - name: MARIADB_USER
+          value: "pterodactyl"
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mariadb-password
+              name: pterodactyl-panel-secret
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mariadb-root-password
+              name: pterodactyl-panel-secret
+        volumeMounts:
+        - mountPath: /var/lib/mysql/
+          name: pterodactyl-mariadb-content
+      volumes:
+      - name: pterodactyl-mariadb-content
+        persistentVolumeClaim:
+          claimName: pterodactyl-mariadb-claim

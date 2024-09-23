@@ -16,12 +16,10 @@ spec:
     metadata:
       labels:
         app: pterodactyl
-      annotations:
-        deploy-date: "deploy-date-value"
     spec:
       containers:
       - name: pterodactyl
-        image: ghcr.io/pterodactyl/panel:latest
+        image: ghcr.io/pterodactyl/panel:v1.11.7
         resources:
           requests:
             memory: "128Mi"
@@ -35,10 +33,10 @@ spec:
         - name: DB_PASSWORD
           valueFrom: 
             secretKeyRef: 
-              key: DB_PASSWORD
-              name: pterodactyl-panel
+              key: mariadb-password
+              name: pterodactyl-panel-secret
         - name: DB_DATABASE
-          value: "pterodactyl_panel"
+          value: "panel"
         - name: APP_ENV
           value: "production"
         - name: APP_ENVIRONMENT_ONLY
@@ -50,43 +48,30 @@ spec:
         - name: QUEUE_DRIVER
           value: "redis" 
         - name: REDIS_HOST
-          value: "redis.example.com" # redis server ip or dns
-        - name: REDIS_PASSWORD
-          valueFrom: 
-            secretKeyRef: 
-              key: REDIS_PASSWORD
-              name: pterodactyl-panel
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        #- name: REDIS_PASSWORD
+        #  valueFrom: 
+        #    secretKeyRef: 
+        #      key: redis-password
+        #      name: pterodactyl-panel-secret
         - name: DB_HOST
-          value: "database.example.com" # database server ip or dns
+          value: "mariadb"
         - name: DB_PORT
-          value: "33306"
+          value: "3306"
         - name: APP_URL
-          value: "https://pterodactyl.example.com" # url of server panel
+          value: "https://panel.gameserver.rafa.run"
         - name: APP_TIMEZONE
-          value: "UTC"
+          value: "Europe/Berlin"
         - name: APP_SERVICE_AUTHOR
-          value: "me@example.com"
+          value: "noreply@kienitz.cloud"
         - name: TRUSTED_PROXIES
-          value: "*" # restrict this to your proxy ip
+          value: "*"
         volumeMounts:
         - mountPath: /app/var/
           name: pterodactyl-app-content
-        - mountPath: /etc/nginx/http.d/
-          name: pterodactyl-nginx-content
-        - mountPath: /etc/letsencrypt/
-          name: pterodactyl-le-content
-        - mountPath: /app/storage/logs
-          name: pterodactyl-logs-content
       volumes:
       - name: pterodactyl-app-content
         persistentVolumeClaim:
-          claimName:  pterodactyl-app-claim
-      - name: pterodactyl-nginx-content
-        persistentVolumeClaim:
-          claimName:  pterodactyl-nginx-claim
-      - name: pterodactyl-le-content
-        persistentVolumeClaim:
-          claimName:  pterodactyl-le-claim
-      - name: pterodactyl-logs-content
-        persistentVolumeClaim:
-          claimName:  pterodactyl-logs-claim
+          claimName: pterodactyl-app-claim
