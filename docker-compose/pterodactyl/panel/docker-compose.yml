@@ -48,7 +48,7 @@ services:
     image: redis:7.4.1-alpine
     restart: unless-stopped
   panel:
-    image: ghcr.io/pterodactyl/panel:v1.11.7
+    image: ghcr.io/pterodactyl/panel:v1.11.9
     restart: unless-stopped
     networks:
       - traefik
