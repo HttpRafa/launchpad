@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: staging-gameserver-rafa-run
+  namespace: pelican # Change this to the namespace where the application is
+spec:
+  secretName: staging-gameserver-rafa-run-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "*.staging.gameserver.rafa.run"
+  dnsNames:
+  - "staging.gameserver.rafa.run"
+  - "*.staging.gameserver.rafa.run"

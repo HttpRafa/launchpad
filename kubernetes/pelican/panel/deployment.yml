@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pelican
+  namespace: pelican
+spec:
+  selector:
+    matchLabels:
+      app: pelican
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pelican
+    spec:
+      containers:
+      - name: pelican
+        image: ghcr.io/pelican-dev/panel:v1.0.0-beta11
+        ports: 
+          - containerPort: 9000
+        env:
+        - name: APP_ENV
+          value: "production"
+        - name: APP_DEBUG
+          value: "false"
+        - name: APP_URL
+          value: "https://panel.staging.gameserver.rafa.run"
+        - name: ADMIN_EMAIL
+          value: "rafael@rafa.run"
+        - name: APP_TIMEZONE
+          value: "Europe/Berlin"
+        - name: TRUSTED_PROXIES
+          value: "*"
+        - name: XDG_DATA_HOME
+          value: "/pelican-data"
+        - name: SKIP_CADDY
+          value: "true"
+        volumeMounts:
+        - mountPath: /pelican-data
+          name: pelican-data-content
+      volumes:
+      - name: pelican-data-content
+        persistentVolumeClaim:
+          claimName: pelican-data-claim
